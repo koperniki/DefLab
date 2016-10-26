@@ -9,12 +9,14 @@ using System.Windows.Forms;
 using DefLab.common.kriging;
 using DefLab.common.kriging.semivariances;
 using DefLab.common.math;
+using DefLab.common.util;
 using DefLab.models;
 using DefLab.renderer;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Cfg.ConfigurationSchema;
+using ThreeCs.Math;
 
 namespace DefLab
 {
@@ -40,11 +42,25 @@ namespace DefLab
 
         public void testGl()
         {
-            var renderer = new TestRenderer();
-          rendererCtrl1.RunSample(renderer);
+            var renderer = new KrigingRenderer();
+            renderer.dataList = Mapper.gridFieldToVector3List(testKriging());
+            /*new List<List<Vector3>>()
+            {
+                new List<Vector3>(5)
+                {
+                    new Vector3(0,0,0),
+                    new Vector3(1,0,0),
+                    new Vector3(1,1,0),
+                    new Vector3(0,1,0),
+                    new Vector3(0,0,0),
+                }
+            };*/
+
+            // Mapper.gridFieldToVector3List( testKriging());
+            rendererCtrl1.RunSample(renderer);
         }
 
-        public void testKriging()
+        public GridField testKriging()
         {
          var config = new KrigingModelConfig();
             config.ModelType = KrigingModelType.linear;
@@ -53,19 +69,19 @@ namespace DefLab
             config.Sill = 10;
             var gridInfo = new GridInfo();
             gridInfo.Extent = new Extent(0,10, 0, 10);
-            gridInfo.Step = 0.5;
+            gridInfo.Step = 0.1;
 
             var krigingKonfig = new KrigingConfig();
-            krigingKonfig.MaxPointsInSector = 20;
+            krigingKonfig.MaxPointsInSector = 10;
             krigingKonfig.SearchRadius = 10;
             krigingKonfig.SectorsCount = 1;
 
             var semivarianse = TheoreticalModel.getModelDelegate(config);
 
-            var points = new[] {new GridPoint(1,1,5), new GridPoint(8,8,-4)  };
+            var points = new[] {new GridPoint(1,1,5), new GridPoint(8,8,5) , new GridPoint(1, 8, 5), new GridPoint(8, 1, 5), new GridPoint(5, 5, 0) };
 
             var grid = Kriging.getGrid(gridInfo, false, krigingKonfig, semivarianse, points, null, null);
-            ;
+            return grid;
         }
 
         public void testBd()

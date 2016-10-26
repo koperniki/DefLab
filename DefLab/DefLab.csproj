@@ -129,6 +129,7 @@
     <Compile Include="common\math\Line2D.cs" />
     <Compile Include="common\math\LineSegment.cs" />
     <Compile Include="common\math\Vector2D.cs" />
+    <Compile Include="common\util\Mapper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +141,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="renderer\BaseRenderer.cs" />
+    <Compile Include="renderer\CamControl.cs" />
+    <Compile Include="renderer\KrigingRenderer.cs" />
     <Compile Include="renderer\RendererCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +150,7 @@
       <DependentUpon>RendererCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="renderer\TestRenderer.cs" />
+    <Compile Include="renderer\TrackBarControl.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
